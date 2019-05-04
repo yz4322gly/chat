@@ -97,7 +97,7 @@ class Msp
         StringBuilder result = new StringBuilder();
         for (Map.Entry<String,String> entry : heads.entrySet())
         {
-            result.append(entry.getKey()).append(entry.getValue()).append("\r\n");
+            result.append(entry.getKey()).append(":").append(entry.getValue()).append("\r\n");
         }
         if (heads.size() <= 0)
         {
@@ -113,5 +113,14 @@ class Msp
     }
 
 
+    public boolean isInit()
+    {
+        return head.containsKey("init") && head.containsKey("fromId");
+    }
 
+
+    public String getFromId()
+    {
+        return head.get("fromId");
+    }
 }

@@ -57,7 +57,10 @@ class ClientChannelHandler extends ChannelInboundHandlerAdapter
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception
     {
-        ctx.writeAndFlush(new Msp(new HashMap<>(),"服务器，我上线了"+ ctx.channel().localAddress()));
+        HashMap map = new HashMap<>();
+        map.put("init","true");
+        map.put("fromId","1236");
+        ctx.writeAndFlush(new Msp(map,""));
     }
 
     @Override
