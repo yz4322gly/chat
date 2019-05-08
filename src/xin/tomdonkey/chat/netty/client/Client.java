@@ -1,4 +1,4 @@
-package xin.tomdonkey.chat.netty;
+package xin.tomdonkey.chat.netty.client;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.Unpooled;
@@ -8,14 +8,36 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.DelimiterBasedFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import xin.tomdonkey.chat.netty.protocol.MspDecoder;
+import xin.tomdonkey.chat.netty.protocol.MspEncoder;
 
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 
-public class Client
+public class Client extends Application
 {
+    @Override
+    public void start(Stage primaryStage) throws Exception
+    {
+        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        primaryStage.setTitle("Hello World");
+        primaryStage.setScene(new Scene(root, 600, 400));
+        primaryStage.setResizable(false);
+        primaryStage.show();
+    }
+
+
+    public static ClientChannelHandler mClientChannelHandle = new ClientChannelHandler();
+
     public static void main(String[] args)
     {
+        new Thread(() -> launch(args)).start();
+
+
         EventLoopGroup workerGroup = new NioEventLoopGroup();
 
         Bootstrap bootstrap = new Bootstrap();
@@ -32,13 +54,12 @@ public class Client
                                 .addLast(new StringDecoder(StandardCharsets.UTF_8))
                                 .addLast(new MspDecoder())
                                 .addLast(new MspEncoder())
-                                .addLast(new ClientChannelHandler());
+                                .addLast(mClientChannelHandle);
                     }
                 });
         try
         {
-            ChannelFuture f = bootstrap.connect("127.0.0.1",8844).sync();
-
+            ChannelFuture f = bootstrap.connect("192.168.1.28",8844).sync();
             f.channel().closeFuture().sync();
         }
         catch (InterruptedException e)
@@ -50,22 +71,5 @@ public class Client
             workerGroup.shutdownGracefully();
         }
 
-    }
-}
-class ClientChannelHandler extends ChannelInboundHandlerAdapter
-{
-    @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception
-    {
-        HashMap map = new HashMap<>();
-        map.put("init","true");
-        map.put("fromId","1236");
-        ctx.writeAndFlush(new Msp(map,""));
-    }
-
-    @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception
-    {
-        System.out.println(msg);
     }
 }

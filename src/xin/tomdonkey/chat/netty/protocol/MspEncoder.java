@@ -1,4 +1,4 @@
-package xin.tomdonkey.chat.netty;
+package xin.tomdonkey.chat.netty.protocol;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

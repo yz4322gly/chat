@@ -1,17 +1,14 @@
-package xin.tomdonkey.chat.netty;
+package xin.tomdonkey.chat.netty.protocol;
 
-import java.io.*;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * 传输的消息实体，前若干行为head，使用key:value标记，每一行使用\r\n隔开
  * 消息体body和头使用一个空行隔开，即头和体中间有\r\n\r\n隔开，消息可以没有消息体。
  * 注意，如果只有消息头的话，消息头结尾也必须有\r\n
  */
-class Msp
+public class Msp
 {
     private Map<String,String> head;
     private String body;

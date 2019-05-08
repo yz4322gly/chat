@@ -1,4 +1,4 @@
-package xin.tomdonkey.chat.netty;
+package xin.tomdonkey.chat.netty.server;
 
 public class Server
 {

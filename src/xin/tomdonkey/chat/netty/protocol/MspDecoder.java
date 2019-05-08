@@ -1,4 +1,4 @@
-package xin.tomdonkey.chat.netty;
+package xin.tomdonkey.chat.netty.protocol;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
@@ -6,7 +6,7 @@ import io.netty.util.ReferenceCountUtil;
 
 import java.util.List;
 
-class MspDecoder extends MessageToMessageDecoder<String>
+public class MspDecoder extends MessageToMessageDecoder<String>
 {
     @Override
     protected void decode(ChannelHandlerContext ctx, String msg, List<Object> out) throws Exception
