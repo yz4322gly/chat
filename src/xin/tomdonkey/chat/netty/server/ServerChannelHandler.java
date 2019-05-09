@@ -7,6 +7,7 @@ import io.netty.util.ReferenceCountUtil;
 import xin.tomdonkey.chat.netty.protocol.Msp;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author guolinyuan
@@ -33,11 +34,12 @@ public class ServerChannelHandler extends ChannelInboundHandlerAdapter
             {
                 channels.add(ctx.channel());
             }
+            else if (massage.isBroadcast())
+            {
+                channels.writeAndFlush(massage);
+            }
 
-            ctx.writeAndFlush(new Msp( new HashMap<>(),"好的，我知道了"));
-
-
-            channels.writeAndFlush(new Msp( new HashMap<>(),ctx.channel().remoteAddress() + "欢迎加入！"));
+            ctx.writeAndFlush(Msp.OK_MSP);
         }
         finally
         {

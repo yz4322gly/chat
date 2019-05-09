@@ -12,10 +12,10 @@
             prefWidth="600.0"
             xmlns="http://javafx.com/javafx/8.0.121"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="xin.tomdonkey.chat.netty.client.Controller">
+            fx:controller="xin.tomdonkey.chat.netty.client.ChatController">
    <children>
       <TextArea fx:id="chatBoxTextArea" editable="false" layoutX="27.0" layoutY="14.0" prefHeight="288.0" prefWidth="547.0" />
-      <TextField fx:id="sendTextField" layoutX="27.0" layoutY="336.0" prefHeight="30.0" prefWidth="448.0" />
+      <TextField fx:id="sendTextField" layoutX="27.0" layoutY="336.0" prefHeight="30.0" prefWidth="448.0" onKeyPressed="#textFieldKeyPressed"/>
       <Button fx:id="sendButton" layoutX="482.0" layoutY="336.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="92.0" text="发送" onAction="#sendMessage" />
    </children>
 </AnchorPane>

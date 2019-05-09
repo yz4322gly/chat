@@ -5,8 +5,6 @@ public class Server
     private int port;
     private NettyServer server;
 
-
-
     public Server(int port)
     {
         this.server = new NettyServer();

@@ -1,5 +1,6 @@
 package xin.tomdonkey.chat.netty.protocol;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -10,8 +11,25 @@ import java.util.Map;
  */
 public class Msp
 {
+
+    public static final Msp OK_MSP= new Msp();
+
+    static
+    {
+        HashMap<String,String> okMap = new HashMap<>(2);
+        okMap.put("fromId","00000");
+        okMap.put("type","receive");
+        OK_MSP.setBody("OK");
+        OK_MSP.setHead(okMap);
+    }
+
     private Map<String,String> head;
     private String body;
+
+    public Map<String, String> getHead()
+    {
+        return head;
+    }
 
     @Override
     public String toString()
@@ -112,12 +130,33 @@ public class Msp
 
     public boolean isInit()
     {
-        return head.containsKey("init") && head.containsKey("fromId");
+        return head.get("type") != null && "init".equals(head.get("type"))&& head.containsKey("fromId");
     }
 
 
     public String getFromId()
     {
         return head.get("fromId");
+    }
+
+
+    public boolean isBroadcast()
+    {
+        return head.get("type") != null && "broadcast".equals(head.get("type"))&& head.containsKey("fromId");
+    }
+
+    public void setHead(Map<String, String> head)
+    {
+        this.head = head;
+    }
+
+    public String getBody()
+    {
+        return body;
+    }
+
+    public void setBody(String body)
+    {
+        this.body = body;
     }
 }
